@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo IA Educación</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #f7f9fc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #003366, #2563eb);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    header p {
+      max-width: 850px;
+      margin: 0 auto;
+      opacity: 0.95;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 50px auto;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: #003366;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .category {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #475569;
+      margin-bottom: 18px;
+    }
+
+    .button {
+      display: inline-block;
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      transition: background 0.2s ease;
+    }
+
+    .button:hover {
+      background: #1d4ed8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Catálogo de herramientas de IA para educación</h1>
+  <p>
+    Repositorio editorial curado para identificar herramientas de inteligencia artificial por uso pedagógico, no por tendencia tecnológica.
+  </p>
+</header>
+
+<section class="container">
+  <h2 class="section-title">Herramientas destacadas</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <span class="category">Investigación</span>
+      <h3>Perplexity</h3>
+      <p>Búsqueda académica asistida con síntesis, trazabilidad de fuentes y validación rápida de información.</p>
+      <a class="button" href="https://www.perplexity.ai/" target="_blank">Explorar herramienta</a>
+    </div>
+
+    <div class="card">
+      <span class="category">Construcción de conocimiento</span>
+      <h3>NotebookLM</h3>
+      <p>Organiza documentos, genera síntesis y crea núcleos de conocimiento para aprendizaje activo.</p>
+      <a class="button" href="https://notebooklm.google/" target="_blank">Explorar herramienta</a>
+    </div>
+
+    <div class="card">
+      <span class="category">Diseño instruccional</span>
+      <h3>Gamma</h3>
+      <p>Genera presentaciones visuales y recursos estructurados para enseñanza y comunicación educativa.</p>
+      <a class="button" href="https://gamma.app/" target="_blank">Explorar herramienta</a>
+    </div>
+
+    <div class="card">
+      <span class="category">Producción audiovisual</span>
+      <h3>Lumen5</h3>
+      <p>Transforma contenidos escritos en videos explicativos y cápsulas educativas audiovisuales.</p>
+      <a class="button" href="https://lumen5.com/" target="_blank">Explorar herramienta</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Catálogo de herramientas de IA para educación · Curación y diseño editorial: Olaf Román
+</footer>
+
+</body>
+</html>
