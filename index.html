@@ -3,161 +3,620 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo IA Educación</title>
+  <title>Catálogo IA para Educación</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root{
+      --bg:#edf6ff;
+      --bg2:#f3fffd;
+      --card:#ffffff;
+      --ink:#102a43;
+      --muted:#5f7285;
+      --line:#d7e7f2;
+      --blue:#2563eb;
+      --blue2:#0ea5e9;
+      --teal:#12b8ad;
+      --soft:#e7f6fb;
+      --soft-blue:#eaf2ff;
+      --warn:#fff5e8;
+      --shadow:0 18px 44px rgba(37,99,235,.10);
     }
 
-    body {
-      font-family: Inter, Arial, sans-serif;
-      background: #f7f9fc;
-      color: #1e293b;
-      line-height: 1.6;
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(37,99,235,.10), transparent 28%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+      color:var(--ink);
+      line-height:1.5;
     }
 
-    header {
-      background: linear-gradient(135deg, #003366, #2563eb);
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
+    header{
+      padding:58px 6vw 74px;
+      color:white;
+      background:
+        radial-gradient(circle at top right, rgba(45,212,191,.42), transparent 30%),
+        linear-gradient(135deg,#1e3a8a 0%,#2563eb 42%,#0ea5e9 72%,#14b8a6 100%);
     }
 
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
+    header h1{
+      margin:0 0 12px;
+      font-size:clamp(2.15rem,4.8vw,4.6rem);
+      letter-spacing:-.055em;
+      line-height:1.02;
+      max-width:980px;
     }
 
-    header p {
-      max-width: 850px;
-      margin: 0 auto;
-      opacity: 0.95;
+    header p{
+      max-width:830px;
+      margin:0;
+      color:rgba(255,255,255,.88);
+      font-size:1.05rem;
     }
 
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 50px auto;
+    .credit{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:18px;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      color:white;
+      text-decoration:none;
+      font-size:.92rem;
+      font-weight:750;
+      border:1px solid rgba(255,255,255,.20);
     }
 
-    .section-title {
-      font-size: 1.8rem;
-      margin-bottom: 25px;
-      color: #003366;
+    .credit:hover{background:rgba(255,255,255,.22)}
+
+    main{
+      width:min(1180px,92vw);
+      margin:0 auto;
+      padding:0 0 72px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(180px,1fr));
+      gap:14px;
+      margin:-42px 0 22px;
     }
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      transition: transform 0.2s ease;
+    .stat{
+      background:rgba(255,255,255,.94);
+      border:1px solid rgba(255,255,255,.88);
+      border-radius:28px;
+      padding:22px 20px 18px;
+      box-shadow:var(--shadow);
+      text-align:center;
+      min-height:118px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
+    .stat strong{
+      color:var(--blue);
+      font-size:clamp(2.45rem,4.8vw,3.55rem);
+      line-height:.9;
+      letter-spacing:-.06em;
     }
 
-    .category {
-      display: inline-block;
-      background: #dbeafe;
-      color: #1d4ed8;
-      font-size: 0.8rem;
-      padding: 6px 10px;
-      border-radius: 999px;
-      margin-bottom: 14px;
+    .stat span{
+      color:var(--muted);
+      font-size:.96rem;
+      font-weight:650;
     }
 
-    .card h3 {
-      margin-bottom: 10px;
-      color: #0f172a;
+    .controls{
+      background:rgba(255,255,255,.86);
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin:0 0 24px;
     }
 
-    .card p {
-      font-size: 0.95rem;
-      color: #475569;
-      margin-bottom: 18px;
+    .search-wrap{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:white;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:12px 17px;
+      margin-bottom:14px;
     }
 
-    .button {
-      display: inline-block;
-      text-decoration: none;
-      background: #2563eb;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      transition: background 0.2s ease;
+    .search-wrap span{font-size:1.05rem;color:var(--muted)}
+
+    #search{
+      width:100%;
+      border:0;
+      outline:0;
+      font:inherit;
+      color:var(--ink);
+      background:transparent;
+      font-size:1rem;
     }
 
-    .button:hover {
-      background: #1d4ed8;
+    .category-menu{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
     }
 
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #64748b;
-      font-size: 0.9rem;
+    .category-menu details{
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#f8fcff;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .category-menu summary{
+      list-style:none;
+      cursor:pointer;
+      padding:10px 14px;
+      color:#075985;
+      font-weight:780;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .category-menu summary::-webkit-details-marker{display:none}
+
+    .category-menu summary::after{
+      content:'⌄';
+      color:var(--blue);
+      font-size:1.2rem;
+      transition:transform .18s ease;
+    }
+
+    .category-menu details[open] summary::after{transform:rotate(180deg)}
+
+    .tool-chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      padding:0 12px 12px;
+      max-width:320px;
+    }
+
+    .chip{
+      border:1px solid #d6e8f6;
+      background:white;
+      color:#17324d;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:.84rem;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .chip:hover{border-color:var(--blue);color:var(--blue)}
+
+    .result-count{
+      margin:12px 2px 0;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(315px,1fr));
+      gap:20px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.96);
+      border:1px solid rgba(215,231,242,.95);
+      border-radius:30px;
+      padding:22px;
+      box-shadow:0 18px 42px rgba(37,99,235,.085);
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+      min-height:260px;
+    }
+
+    .top{
+      display:flex;
+      gap:14px;
+      justify-content:space-between;
+      align-items:flex-start;
+    }
+
+    .name{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width:0;
+    }
+
+    .emoji{
+      width:50px;
+      height:50px;
+      flex:0 0 auto;
+      border-radius:20px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#eaf2ff,#dcfbf6);
+      font-size:1.45rem;
+    }
+
+    h2{
+      font-size:1.18rem;
+      margin:0;
+      letter-spacing:-.03em;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      background:#e8f7fb;
+      color:#075985;
+      font-size:.72rem;
+      font-weight:780;
+      padding:7px 10px;
+      text-align:center;
+      max-width:158px;
+      line-height:1.25;
+    }
+
+    .short{
+      font-weight:500;
+      font-size:1rem;
+      color:#17324d;
+      margin:0;
+      border-left:4px solid var(--teal);
+      padding-left:12px;
+      line-height:1.62;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:auto;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      padding:11px 15px;
+      text-decoration:none;
+      font-weight:780;
+      font-size:.9rem;
+      border:0;
+    }
+
+    .primary{
+      background:linear-gradient(135deg,var(--blue),var(--blue2) 55%,var(--teal));
+      color:white;
+      box-shadow:0 10px 22px rgba(37,99,235,.18);
+    }
+
+    .primary:hover{filter:brightness(.98);transform:translateY(-1px)}
+
+    .card details{
+      border-top:1px solid var(--line);
+      padding-top:12px;
+    }
+
+    .card summary{
+      cursor:pointer;
+      font-weight:780;
+      color:#087c89;
+      font-size:.94rem;
+      list-style:none;
+    }
+
+    .card summary::-webkit-details-marker{display:none}
+
+    .details-content{padding-top:12px}
+
+    .extended{
+      color:var(--muted);
+      font-size:.93rem;
+      margin:0 0 12px;
+    }
+
+    .mini-title{
+      font-weight:780;
+      margin:12px 0 7px;
+      color:#17324d;
+      font-size:.9rem;
+    }
+
+    .case{
+      background:#f7fbff;
+      border:1px solid var(--line);
+      border-radius:17px;
+      padding:11px;
+      margin:8px 0;
+    }
+
+    .case b{
+      display:block;
+      font-size:.88rem;
+      color:#17324d;
+    }
+
+    .case span{
+      display:block;
+      font-size:.82rem;
+      color:var(--muted);
+      margin:2px 0 7px;
+    }
+
+    .prompt{
+      font-size:.84rem;
+      background:white;
+      border-left:3px solid var(--blue);
+      padding:8px 10px;
+      border-radius:10px;
+      color:#30485c;
+    }
+
+    .cols{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:11px;
+    }
+
+    .box{
+      border-radius:17px;
+      padding:12px;
+      background:#f0fbf8;
+      border:1px solid #d6eee9;
+    }
+
+    .box.limit{
+      background:var(--warn);
+      border-color:#f0ddc8;
+    }
+
+    .box h4{
+      font-size:.86rem;
+      margin:0 0 7px;
+    }
+
+    ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:.82rem;
+    }
+
+    .note{
+      margin-top:34px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .note h2{
+      margin:0 0 8px;
+      font-size:1.25rem;
+    }
+
+    .note p{
+      color:var(--muted);
+      margin:0;
+    }
+
+    .note a{
+      color:var(--blue);
+      font-weight:800;
+      text-decoration:none;
+    }
+
+    .note a:hover{text-decoration:underline}
+
+    .hidden{display:none!important}
+
+    @media(max-width:760px){
+      header{padding:42px 6vw 62px}
+      .stats{grid-template-columns:1fr;margin-top:-36px}
+      .grid{grid-template-columns:1fr}
+      .cols{grid-template-columns:1fr}
+      .tag{max-width:none}
+      .card{min-height:auto}
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Catálogo de Herramientas de IA para Educación</h1>
+    <p>Repositorio editorial curado para identificar herramientas por uso pedagógico, no por tendencia tecnológica.</p>
+    <a class="credit" href="https://www.instagram.com/olafroman/" target="_blank" rel="noopener noreferrer">Curación realizada por Olaf Román ↗</a>
+  </header>
 
-<header>
-  <h1>Catálogo de herramientas de IA para educación</h1>
-  <p>
-    Repositorio editorial curado para identificar herramientas de inteligencia artificial por uso pedagógico, no por tendencia tecnológica.
-  </p>
-</header>
+  <main>
+    <section class="stats">
+      <div class="stat"><strong id="toolsCount">0</strong><span>Herramientas</span></div>
+      <div class="stat"><strong id="categoriesCount">0</strong><span>Categorías</span></div>
+      <div class="stat"><strong id="casesCount">0</strong><span>Casos con prompt</span></div>
+    </section>
 
-<section class="container">
-  <h2 class="section-title">Herramientas destacadas</h2>
+    <section class="controls">
+      <label class="search-wrap" for="search"><span>🔎</span><input id="search" type="search" placeholder="Buscar..." /></label>
+      <div class="category-menu" id="categoryMenu"></div>
+      <div class="result-count" id="resultCount"></div>
+    </section>
 
-  <div class="grid">
+    <section class="grid" id="grid"></section>
 
-    <div class="card">
-      <span class="category">Investigación</span>
-      <h3>Perplexity</h3>
-      <p>Búsqueda académica asistida con síntesis, trazabilidad de fuentes y validación rápida de información.</p>
-      <a class="button" href="https://www.perplexity.ai/" target="_blank">Explorar herramienta</a>
-    </div>
+    <section class="note">
+      <details>
+        <summary style="cursor:pointer;list-style:none;font-size:1.15rem;font-weight:850;color:#17324d;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+          Guía de uso con propósito pedagógico <span style='color:var(--blue);font-size:1.1rem;'>⌄</span>
+        </summary>
+        <div style="padding-top:16px;display:flex;flex-direction:column;gap:18px;">
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#2563eb;">Herramientas de IA para el aula</h3>
+            <p style="margin:0;color:var(--muted);">Complemento del catálogo para tomar decisiones más claras sobre qué herramienta elegir, cuándo usarla y cómo integrarla al diseño didáctico.</p>
+          </div>
 
-    <div class="card">
-      <span class="category">Construcción de conocimiento</span>
-      <h3>NotebookLM</h3>
-      <p>Organiza documentos, genera síntesis y crea núcleos de conocimiento para aprendizaje activo.</p>
-      <a class="button" href="https://notebooklm.google/" target="_blank">Explorar herramienta</a>
-    </div>
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#17324d;">1. El problema no es la herramienta</h3>
+            <p style="margin:0;color:var(--muted);">La mayoría de los docentes no tiene un problema de acceso sino de criterio: demasiadas opciones y poca claridad sobre cuál sirve para qué.</p>
+          </div>
 
-    <div class="card">
-      <span class="category">Diseño instruccional</span>
-      <h3>Gamma</h3>
-      <p>Genera presentaciones visuales y recursos estructurados para enseñanza y comunicación educativa.</p>
-      <a class="button" href="https://gamma.app/" target="_blank">Explorar herramienta</a>
-    </div>
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#17324d;">2. Flujo pedagógico</h3>
+            <p style="margin:0;color:var(--muted);">Cada herramienta se entiende mejor cuando se relaciona con un momento del aprendizaje: apertura, desarrollo, cierre, retroalimentación o repaso autónomo.</p>
+          </div>
 
-    <div class="card">
-      <span class="category">Producción audiovisual</span>
-      <h3>Lumen5</h3>
-      <p>Transforma contenidos escritos en videos explicativos y cápsulas educativas audiovisuales.</p>
-      <a class="button" href="https://lumen5.com/" target="_blank">Explorar herramienta</a>
-    </div>
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#17324d;">3. Cuatro criterios de elección</h3>
+            <ul style="margin:0;padding-left:18px;color:var(--muted);display:flex;flex-direction:column;gap:6px;">
+              <li>¿Qué resuelve que no haces igual sin ella?</li>
+              <li>¿En qué momento del diseño entra?</li>
+              <li>¿Qué validas antes de llevarlo al aula?</li>
+              <li>¿Se integra o reemplaza tu práctica?</li>
+            </ul>
+          </div>
 
-  </div>
-</section>
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#17324d;">4. Cuándo no usar IA</h3>
+            <p style="margin:0;color:var(--muted);">Evita usarla cuando el proceso del estudiante es parte esencial del aprendizaje o cuando no existe tiempo para validar resultados.</p>
+          </div>
 
-<footer>
-  Catálogo de herramientas de IA para educación · Curación y diseño editorial: Olaf Román
-</footer>
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#17324d;">5. Cómo leer el catálogo</h3>
+            <p style="margin:0;color:var(--muted);">Cada ficha mantiene la misma estructura: descripción corta, descripción extendida, casos de uso, ventajas y limitaciones para facilitar comparación editorial.</p>
+          </div>
 
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#17324d;">6. Integración gradual</h3>
+            <p style="margin:0;color:var(--muted);">La integración más sostenible comienza con apoyos puntuales antes de rediseñar procesos completos alrededor de una herramienta.</p>
+          </div>
+
+          <div>
+            <h3 style="margin:0 0 6px;font-size:1rem;color:#17324d;">7. Validación docente</h3>
+            <p style="margin:0;color:var(--muted);">La IA produce borradores plausibles; el criterio docente determina qué es correcto, pertinente y adecuado para cada contexto educativo.</p>
+          </div>
+
+          <div style="padding-top:8px;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted);">
+            Catálogo de Herramientas de IA para Educación · Curación y diseño editorial: <a href="https://www.instagram.com/olafroman/" target="_blank" style="color:var(--blue);font-weight:800;text-decoration:none;">Olaf Román</a>
+          </div>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script>
+    const tools = [
+      {emoji:'🪄',name:'MagicSchool',category:'Diseño instruccional y planeación',level:'Básico – Intermedio',url:'https://www.magicschool.ai/',short:'Centraliza planeación, rúbricas y diferenciación pedagógica en un entorno exclusivo para docentes.',extended:'Plataforma para trabajo docente que concentra planeaciones, rúbricas y adaptación por nivel. Su diferencial es el contexto educativo predefinido, que reduce la necesidad de estructurar prompts desde cero.',cases:[['Planeación con objetivo','Sesión con criterio de logro específico.','Diseña una actividad colaborativa de 45 minutos sobre ecosistemas para secundaria, con objetivo, cierre y criterios de evaluación.'],['Rúbrica por desempeño','Evaluación de presentación oral o proyecto.','Crea una rúbrica de cuatro niveles para evaluar una presentación científica con criterios de contenido, evidencia y comunicación.'],['Adaptación por nivel','Grupo con distintos puntos de trayectoria.','Adapta esta actividad de comprensión lectora para estudiantes con nivel inicial, sin reducir el estímulo cognitivo.']],pros:['Concentra funciones pedagógicas en un solo entorno.','Acelera materiales con plantillas prediseñadas.','Diferencia actividades con criterios explícitos.'],cons:['Puede generar resultados similares sin contexto propio.','Requiere validación disciplinar.','Funciones avanzadas dependen de suscripción.']},
+      {emoji:'🧩',name:'Eduaide',category:'Diseño instruccional y planeación',level:'Básico – Intermedio',url:'https://www.eduaide.ai/',short:'Diseña secuencias didácticas y evaluaciones diagnósticas adaptadas al contexto de cada sesión.',extended:'Asistente de diseño instruccional que produce actividades, diagnósticos y dinámicas activas según apertura, desarrollo, evaluación y cierre.',cases:[['Diagnóstico de entrada','Inicio de unidad o curso nuevo.','Diseña cinco preguntas diagnósticas sobre energía renovable para detectar conocimientos previos en bachillerato.'],['Aprendizaje activo','Sesión presencial colaborativa.','Genera una dinámica basada en retos para abordar proporcionalidad en secundaria con grupos de cuatro personas.'],['Actividad diferenciada','Distintos niveles de dominio.','Adapta esta actividad de álgebra en tres versiones: básico, intermedio y avanzado, con el mismo objetivo.']],pros:['Orienta actividades según momento didáctico.','Genera diagnósticos accionables.','Produce versiones diferenciadas rápidamente.'],cons:['Menor flexibilidad para educación no formal.','Exportación y colaboración pueden ser restringidas.','Necesita contexto docente para evitar generalidad.']},
+      {emoji:'🛡️',name:'Turnitin',category:'Evaluación y retroalimentación',level:'Intermedio – Avanzado',url:'https://www.turnitin.com/',short:'Detecta coincidencias textuales y estructura retroalimentación escrita para producción académica.',extended:'Sistema de similitud textual con retroalimentación formativa. Ayuda a revisar coincidencias, evolución de borradores, argumentación y uso de fuentes.',cases:[['Originalidad textual','Ensayo o investigación.','Analiza coincidencias textuales de este ensayo e indica secciones que requieren revisión de citación o parafraseo.'],['Argumentación escrita','Escritura académica en proceso.','Identifica debilidades argumentativas e indica cómo mejorar la conexión entre evidencias y conclusiones.'],['Seguimiento de borradores','Proceso de escritura por etapas.','Compara este borrador con la versión anterior y señala mejoras de coherencia y puntos pendientes.']],pros:['Integra LMS institucionales.','Rastrea proceso escritural.','Apoya integridad académica actual.'],cons:['Puede producir falsos positivos.','El porcentaje aislado no determina plagio.','Configurar rúbricas requiere tiempo.']},
+      {emoji:'📊',name:'Gradescope',category:'Evaluación y retroalimentación',level:'Intermedio – Avanzado',url:'https://www.gradescope.com/',short:'Agrupa respuestas estudiantiles y agiliza calificación consistente en evaluaciones de escala.',extended:'Plataforma de evaluación asistida que agrupa respuestas similares, mantiene consistencia entre revisores y detecta patrones de error frecuentes.',cases:[['Calificación en lote','Respuesta corta en grupo numeroso.','Agrupa respuestas abiertas por similitud conceptual y sugiere una calificación base por cluster.'],['Patrones de error','Conceptos mal comprendidos.','Identifica los tres errores más frecuentes en este examen de cálculo y describe cada patrón conceptual.'],['Criterio compartido','Múltiples evaluadores.','Define criterios de calificación compartidos para esta pregunta y genera una guía de aplicación homogénea.']],pros:['Reduce inconsistencias entre evaluadores.','Convierte evaluación en diagnóstico.','Compatible con exámenes, envíos y código.'],cons:['Configuración inicial toma tiempo.','Pierde precisión con alta variabilidad.','Mejor en evaluaciones estructuradas.']},
+      {emoji:'🎬',name:'Lumen5',category:'Producción audiovisual',level:'Básico',url:'https://lumen5.com/',short:'Convierte texto o guión en video breve para onboarding temático y síntesis de módulo.',extended:'Transforma textos en cápsulas audiovisuales mediante imágenes, música y transiciones predefinidas. Útil para bienvenida, síntesis y materiales introductorios.',cases:[['Onboarding de curso','Primer contacto con un módulo.','Convierte este resumen del curso en un video de bienvenida de 90 segundos con tono motivacional.'],['Cápsula de síntesis','Cierre de unidad temática.','Genera una cápsula de dos minutos que resuma los cinco conceptos clave sobre cambio climático.'],['Preclase invertida','Material previo a sesión.','Transforma este guión sobre fotosíntesis en un video explicativo breve para ver antes de clase.']],pros:['Reduce tiempo de producción introductoria.','No requiere edición ni grabación.','Plantillas alinean materiales educativos.'],cons:['Imágenes automáticas pueden ser imprecisas.','El estilo visual tiende a repetirse.','Personalización profunda requiere pago.']},
+      {emoji:'🎞️',name:'Pictory',category:'Producción audiovisual',level:'Básico – Intermedio',url:'https://pictory.ai/',short:'Transforma artículos y lecturas extensas en videos de repaso para aprendizaje autónomo.',extended:'Convierte documentos largos en videos breves mediante selección de fragmentos clave y segmentación automática en escenas.',cases:[['Resumen de lectura','Artículo académico a video.','Convierte este artículo educativo en un video resumen de tres minutos con hallazgos principales destacados.'],['Cápsula de repaso','Preparación autónoma.','Genera una cápsula de 90 segundos sobre causas de la Segunda Guerra Mundial para repaso estudiantil.'],['Recurso preclase','Activación previa.','Crea un video introductorio sobre energía solar desde este documento de dos páginas.']],pros:['Procesa documentos extensos.','Acelera recursos de repaso.','Permite subir materiales propios.'],cons:['Puede omitir ideas densas.','Control narrativo limitado.','Depende de textos bien estructurados.']},
+      {emoji:'🎥',name:'Runway',category:'Producción audiovisual',level:'Intermedio – Avanzado',url:'https://runwayml.com/',short:'Produce y edita video con IA para simulaciones educativas y narrativas audiovisuales complejas.',extended:'Suite audiovisual generativa para crear escenas, editar video con lenguaje natural y construir narrativas visuales de mayor control creativo.',cases:[['Simulación visual','Contexto histórico, científico o social.','Genera una simulación visual de una ciudad sostenible en 2050 con movilidad eléctrica y espacios verdes.'],['Narrativa audiovisual','Recurso con arco narrativo.','Crea una secuencia de 30 segundos sobre el impacto urbano de la Revolución Industrial.'],['Postproducción docente','Mejora de video grabado.','Elimina el fondo de este video, mejora iluminación y añade subtítulos automáticos en español.']],pros:['Edición con lenguaje natural.','Mayor control que plantillas.','Integra generación y postproducción.'],cons:['Mayor curva de aprendizaje.','Alta calidad demanda recursos.','Créditos avanzados se agotan rápido.']},
+      {emoji:'🎵',name:'Suno',category:'Recursos sonoros',level:'Básico',url:'https://suno.com/',short:'Compone canciones temáticas para anclar contenidos curriculares mediante memoria musical.',extended:'Genera música con letra a partir de tema, tono y estilo. Útil para memorización, apertura de sesiones y aprendizaje lúdico.',cases:[['Anclaje conceptual','Contenidos difíciles de memorizar.','Compón una canción pop de dos minutos sobre ciclo del agua con evaporación, condensación y precipitación.'],['Apertura de sesión','Activación inicial.','Genera una canción energética para taller docente sobre innovación educativa, tono motivacional y ritmo ágil.'],['Recurso mnemotécnico','Retención de fórmulas.','Crea un rap para que secundaria recuerde fórmulas de área de figuras geométricas.']],pros:['Produce canciones sin conocimientos musicales.','Favorece retención mediante memoria musical.','Adapta estilo a edad y contexto.'],cons:['Letra requiere validación conceptual.','Control musical técnico limitado.','Créditos gratuitos restringen uso.']},
+      {emoji:'🎧',name:'Speechify',category:'Accesibilidad',level:'Básico',url:'https://speechify.com/',short:'Convierte documentos y lecturas académicas en narración auditiva para estudio móvil e inclusivo.',extended:'Transforma documentos, PDFs y páginas web en audio con voz y velocidad ajustables. Apoya accesibilidad lectora y repaso multimodal.',cases:[['Lectura accesible','Apoyo a dislexia o baja fluidez.','Convierte este artículo académico en narración con velocidad moderada y pausas entre párrafos.'],['Estudio móvil','Repaso durante trayectos.','Carga este resumen de historia y genera audio para escuchar durante 20 minutos sin pantalla.'],['Revisión auditiva','Docente revisa sin pantalla.','Lee en voz alta este borrador didáctico para detectar frases confusas o párrafos extensos.']],pros:['Compatible con varios formatos.','Velocidad ajustable.','Apoya inclusión sin rediseñar materiales.'],cons:['Voces básicas pierden naturalidad.','Funciones naturales suelen ser de pago.','Depende de literacidad auditiva.']},
+      {emoji:'👁️',name:'Immersive Reader',category:'Accesibilidad',level:'Básico',url:'https://www.microsoft.com/en-us/education/products/learning-tools',short:'Adapta visualmente textos académicos para lectura guiada, traducción y enfoque inclusivo.',extended:'Herramienta de Microsoft para lectura accesible: línea de enfoque, separación silábica, lectura en voz alta, resaltado gramatical y traducción.',cases:[['Lectura guiada','Texto complejo en aula.','Activa línea de enfoque y separación silábica para este texto de biología de bachillerato.'],['Apoyo bilingüe','Lectura en segundo idioma.','Traduce este artículo al español manteniendo formato de lectura y resaltado gramatical.'],['Enfoque visual','Dificultad de concentración.','Configura espaciado amplio, línea de enfoque activa y fuente clara para reducir distracción visual.']],pros:['Disponible en Microsoft 365.','Combina funciones de accesibilidad.','No modifica documento original.'],cons:['Personalización predefinida.','Depende del ecosistema Microsoft.','No sustituye intervención especializada.']},
+      {emoji:'🔎',name:'Semantic Scholar',category:'Investigación',level:'Intermedio – Avanzado',url:'https://www.semanticscholar.org/',short:'Localiza artículos científicos y mapea conexiones entre investigaciones mediante análisis de citas.',extended:'Motor académico que muestra relaciones entre estudios, autores, citas y temas para detectar evidencia, líneas de investigación y vacíos.',cases:[['Evidencia reciente','Marco teórico actualizado.','Busca artículos posteriores a 2021 sobre efectividad del aprendizaje híbrido en educación media superior.'],['Influencia académica','Estudios de referencia.','Muestra los cinco artículos más citados sobre IA en educación superior y sus relaciones.'],['Red temática','Revisión bibliográfica.','Desde este artículo sobre gamificación, identifica estudios relacionados sobre motivación y permanencia escolar.']],pros:['Identifica relevancia mediante citas.','Facilita PDFs abiertos.','Detecta vacíos y tendencias.'],cons:['Cobertura menor en español.','Indexación reciente puede tardar.','Menos útil para diseño directo.']},
+      {emoji:'🗂️',name:'Notion AI',category:'Productividad y gestión',level:'Básico – Intermedio',url:'https://www.notion.com/product/ai',short:'Sintetiza reuniones, organiza proyectos educativos y construye repositorios documentales colaborativos.',extended:'Asistente integrado en Notion para resumir notas, estructurar proyectos y organizar información en bases colaborativas.',cases:[['Síntesis académica','Reunión docente.','Resume estas notas en acuerdos concretos, responsables y fechas clave para el siguiente ciclo escolar.'],['Proyecto educativo','Coordinación institucional.','Organiza este rediseño curricular en fases, tareas por responsable y criterios de avance medible.'],['Repositorio académico','Materiales de curso.','Crea una estructura de repositorio para posgrado con secciones por módulo, recurso y avance.']],pros:['Combina escritura, bases y colaboración.','Genera estructuras desde cero.','Historial apoya seguimiento editorial.'],cons:['Curva inicial moderada.','IA avanzada requiere pago.','Puede saturarse sin arquitectura clara.']},
+      {emoji:'💻',name:'Replit',category:'STEM y low-code',level:'Básico – Intermedio',url:'https://replit.com/',short:'Desarrolla prototipos STEM y aplicaciones educativas mediante programación asistida en entorno web.',extended:'Entorno en línea para crear, ejecutar y publicar software desde navegador, con asistencia de IA. Facilita prototipos, simuladores y proyectos STEM colaborativos.',cases:[['Prototipo STEM','Solución funcional a un problema.','Crea una app web simple para calcular huella de carbono diaria y mostrar recomendaciones de reducción.'],['Simulador básico','Relación matemática interactiva.','Desarrolla un simulador visual de movimiento rectilíneo con controles de velocidad, tiempo y distancia.'],['Proyecto colaborativo','Código y documentación en línea.','Organiza este proyecto en archivos HTML, CSS y JavaScript con comentarios para estudiantes principiantes.']],pros:['Evita instalación local.','Construye, prueba y publica en un entorno.','IA acelera depuración y prototipado.'],cons:['Puede ocultar fundamentos.','Proyectos complejos requieren arquitectura clara.','Planes gratuitos pueden limitar recursos.']},
+      {emoji:'🤖',name:'GitHub Copilot',category:'STEM y low-code',level:'Intermedio – Avanzado',url:'https://github.com/features/copilot',short:'Acompaña escritura, explicación y revisión de código en proyectos STEM avanzados.',extended:'Asistente de programación integrado en editores que sugiere código, explica funciones, ayuda a depurar y propone pruebas.',cases:[['Explicación de código','Comprender antes de modificar.','Explica este código Python línea por línea y señala qué conceptos debe dominar un estudiante intermedio.'],['Depuración guiada','Errores de ejecución.','Identifica el error en esta función, explica la causa y propone una corrección mínima comentada.'],['Pruebas de software','Calidad de solución.','Genera pruebas unitarias para esta función y explica qué caso de borde cubre cada prueba.']],pros:['Acelera escritura y revisión.','Explica fragmentos y errores.','Favorece pruebas y documentación.'],cons:['Puede generar código no comprendido.','Requiere supervisión de seguridad.','Pierde valor si solo completa tareas.']},
+      {emoji:'📚',name:'NotebookLM',category:'Construcción de conocimiento',level:'Básico – Intermedio',url:'https://notebooklm.google/',short:'Relaciona materiales propios para estudio contextual y construcción guiada de conocimiento académico.',extended:'Asistente de estudio que trabaja sobre fuentes cargadas por el usuario para generar guías, mapas, resúmenes y preguntas basadas en materiales propios.',cases:[['Lectura guiada','Documentos base de unidad.','A partir de estas lecturas, genera una guía de estudio con conceptos clave, preguntas y conexiones entre autores.'],['Síntesis comparada','Contrastar fuentes.','Compara estos tres documentos e identifica coincidencias, diferencias y tensiones conceptuales relevantes para discusión.'],['Seminario académico','Conversación basada en fuentes.','Genera diez preguntas de seminario basadas solo en estas fuentes, ordenadas de comprensión a análisis crítico.']],pros:['Trabaja sobre materiales propios.','Convierte documentos en guías y conexiones.','Favorece diálogo con fuentes del curso.'],cons:['Depende de buena selección de fuentes.','Puede simplificar tensiones conceptuales.','No sustituye lectura crítica.']},
+      {emoji:'💬',name:'ChatGPT',category:'Diseño instruccional y planeación',level:'Básico – Avanzado',url:'https://chat.openai.com/',short:'Estructura actividades, explicaciones y materiales adaptables para múltiples contextos educativos.',extended:'Asistente conversacional flexible para generar materiales, ideas, retroalimentación y apoyo docente en distintos niveles educativos.',cases:[['Planeación rápida','Diseño de clase semanal.','Diseña una secuencia de 50 minutos sobre fracciones con inicio, desarrollo y cierre para primaria.'],['Explicación gradual','Contenido complejo.','Explica fotosíntesis en tres niveles: primaria, secundaria y bachillerato.'],['Retroalimentación','Revisión de trabajo escrito.','Genera retroalimentación formativa para este ensayo destacando fortalezas y oportunidades.']],pros:['Versátil para múltiples tareas.','Reduce tiempo de diseño.','Permite adaptación contextual.'],cons:['Puede inventar información.','Depende de prompts claros.','Requiere validación docente.']},
+      {emoji:'🧠',name:'Claude',category:'Construcción de conocimiento',level:'Intermedio – Avanzado',url:'https://claude.ai/',short:'Analiza documentos extensos y sintetiza ideas complejas con enfoque contextual.',extended:'Asistente orientado a lectura, análisis y organización de información extensa para síntesis académica y trabajo documental.',cases:[['Análisis documental','Lecturas extensas.','Resume estos tres artículos identificando coincidencias y tensiones conceptuales principales.'],['Diseño editorial','Repositorio o catálogo.','Propón una estructura editorial para organizar herramientas educativas por función pedagógica.'],['Síntesis académica','Investigación de curso.','Convierte este marco teórico en una síntesis de estudio de una página.']],pros:['Procesa contexto amplio.','Buena coherencia documental.','Útil para síntesis complejas.'],cons:['Puede simplificar demasiado.','Funciones dependen del plan.','No reemplaza lectura crítica.']},
+      {emoji:'🔍',name:'Perplexity',category:'Investigación',level:'Básico – Intermedio',url:'https://www.perplexity.ai/',short:'Busca información reciente con citas integradas para exploración académica rápida.',extended:'Motor conversacional orientado a búsqueda y síntesis con referencias visibles para localizar información actualizada.',cases:[['Búsqueda reciente','Tema emergente.','Busca estudios recientes sobre aprendizaje híbrido en educación superior y resume hallazgos.'],['Exploración inicial','Inicio de investigación.','Identifica tendencias actuales sobre evaluación formativa mediada por IA.'],['Fuentes rápidas','Preparación docente.','Localiza recursos introductorios sobre alfabetización digital con referencias abiertas.']],pros:['Integra búsqueda y síntesis.','Muestra referencias rápidamente.','Útil para exploración inicial.'],cons:['Calidad depende de fuentes web.','Puede resumir sin profundidad.','No sustituye revisión académica formal.']},
+      {emoji:'🎨',name:'Canva Magic Design',category:'Producción audiovisual',level:'Básico',url:'https://www.canva.com/',short:'Crea presentaciones y recursos visuales educativos mediante plantillas asistidas por IA.',extended:'Herramienta visual para producir diapositivas, infografías y materiales didácticos rápidos con apoyo generativo.',cases:[['Presentación visual','Clase expositiva.','Genera una presentación visual sobre reciclaje para secundaria con iconografía y ejemplos simples.'],['Infografía','Resumen visual.','Diseña una infografía educativa sobre ciclo del agua con lenguaje accesible.'],['Material social','Difusión institucional.','Crea un carrusel visual para redes sobre hábitos de estudio.']],pros:['Muy accesible para docentes.','Reduce tiempo de diseño visual.','Amplia biblioteca de recursos.'],cons:['Plantillas pueden verse repetitivas.','Funciones premium limitadas.','Requiere criterio visual básico.']},
+      {emoji:'📝',name:'Gamma',category:'Productividad y gestión',level:'Básico – Intermedio',url:'https://gamma.app/',short:'Transforma esquemas e ideas en presentaciones navegables y documentos visuales.',extended:'Generador de presentaciones y documentos interactivos con estructura automática y diseño adaptable.',cases:[['Clase visual','Presentación rápida.','Convierte este esquema sobre ciudadanía digital en una presentación visual clara y breve.'],['Reporte ejecutivo','Síntesis institucional.','Genera un reporte visual con resultados de evaluación diagnóstica escolar.'],['Guía interactiva','Material autónomo.','Crea una guía visual navegable sobre pensamiento crítico para bachillerato.']],pros:['Diseño automático consistente.','Reduce tiempo de maquetación.','Exporta fácilmente materiales.'],cons:['Control visual limitado.','Puede simplificar estructura.','Depende de prompts claros.']},
+      {emoji:'🖼️',name:'Leonardo AI',category:'Producción audiovisual',level:'Intermedio',url:'https://leonardo.ai/',short:'Genera imágenes didácticas y escenas visuales adaptadas a contenidos educativos.',extended:'Herramienta de generación visual para crear ilustraciones, escenas y recursos gráficos personalizados.',cases:[['Ilustración conceptual','Tema abstracto.','Genera una ilustración educativa sobre cadena alimenticia con estilo claro y colores suaves.'],['Escena histórica','Contextualización visual.','Crea una escena visual de una ciudad mesopotámica para apoyo didáctico.'],['Personaje educativo','Narrativa visual.','Diseña un personaje guía para contenidos de ciencias naturales en primaria.']],pros:['Alto control visual.','Útil para recursos personalizados.','Permite estilos variados.'],cons:['Requiere prompts precisos.','Puede generar errores visuales.','Curva de aprendizaje moderada.']},
+      {emoji:'🎙️',name:'ElevenLabs',category:'Recursos sonoros',level:'Intermedio',url:'https://elevenlabs.io/',short:'Produce narraciones educativas con voces sintéticas naturales y control expresivo.',extended:'Plataforma de síntesis de voz para crear audioguías, narraciones y recursos auditivos educativos.',cases:[['Audioclase','Contenido asincrónico.','Genera una narración clara sobre tectónica de placas con tono docente y pausas naturales.'],['Accesibilidad auditiva','Material inclusivo.','Convierte este documento en audio con voz cálida y velocidad moderada.'],['Podcast educativo','Divulgación breve.','Crea una narración tipo podcast sobre energías renovables para secundaria.']],pros:['Voces muy naturales.','Mejora accesibilidad auditiva.','Permite distintos tonos y estilos.'],cons:['Funciones avanzadas son de pago.','Uso ético requiere supervisión.','Edición avanzada toma tiempo.']},
+      {emoji:'📄',name:'Elicit',category:'Investigación',level:'Intermedio',url:'https://elicit.com/',short:'Organiza evidencia académica y compara hallazgos entre investigaciones científicas.',extended:'Asistente de revisión académica que ayuda a localizar, comparar y sintetizar estudios científicos.',cases:[['Comparación de estudios','Revisión bibliográfica.','Compara estos artículos sobre aprendizaje activo identificando métodos y hallazgos principales.'],['Mapa de evidencia','Exploración temática.','Organiza evidencia reciente sobre IA generativa en educación superior.'],['Síntesis rápida','Preparación académica.','Resume aportes y limitaciones de estos cinco estudios sobre evaluación digital.']],pros:['Facilita revisión académica.','Sintetiza hallazgos rápidamente.','Ayuda a comparar evidencia.'],cons:['No reemplaza lectura completa.','Puede omitir matices.','Mayor utilidad en inglés.']},
+      {emoji:'🧪',name:'PhET',category:'STEM y low-code',level:'Básico',url:'https://phet.colorado.edu/',short:'Explora fenómenos científicos mediante simulaciones interactivas para aprendizaje experimental.',extended:'Repositorio de simulaciones STEM que permite experimentar variables y visualizar fenómenos científicos complejos.',cases:[['Simulación científica','Clase experimental.','Explora cambios de temperatura y volumen en gases usando una simulación interactiva.'],['Aprendizaje visual','Conceptos abstractos.','Utiliza una simulación de circuitos eléctricos para identificar flujo y resistencia.'],['Trabajo autónomo','Actividad individual.','Diseña una guía de exploración para usar una simulación sobre gravedad.']],pros:['Muy accesible visualmente.','Favorece aprendizaje experimental.','Funciona en distintos niveles.'],cons:['Cobertura temática limitada.','Requiere mediación docente.','No sustituye laboratorio real.']},
+      {emoji:'🌐',name:'Gemini',category:'Construcción de conocimiento',level:'Básico – Intermedio',url:'https://gemini.google.com/',short:'Relaciona texto, imágenes y búsqueda web para exploración multimodal de contenidos educativos.',extended:'Asistente multimodal de Google orientado a síntesis, exploración visual y análisis combinado de distintos formatos.',cases:[['Exploración multimodal','Texto e imagen combinados.','Explica este diagrama biológico y resume los conceptos clave en lenguaje accesible.'],['Comparación conceptual','Síntesis rápida.','Compara aprendizaje híbrido y aprendizaje invertido con ejemplos aplicados.'],['Análisis visual','Interpretación de recurso.','Describe esta infografía y detecta conceptos principales para una clase.']],pros:['Integra distintos formatos.','Útil para exploración rápida.','Conecta búsqueda y síntesis.'],cons:['Puede simplificar demasiado.','Resultados variables según contexto.','Requiere validación docente.']},
+      {emoji:'🧠',name:'Hacedor de metáforas (GPT)',category:'Construcción de conocimiento',level:'Intermedio',url:'https://chat.openai.com/g/',short:'Transforma conceptos abstractos en imágenes mentales comprensibles mediante analogías pedagógicas.',extended:'GPT especializado en traducir ideas complejas a metáforas didácticas y conexiones intuitivas. Ayuda a comprender conceptos científicos, filosóficos o técnicos mediante imágenes mentales memorables adaptadas a distintos niveles educativos.',cases:[['Concepto complejo','Tema abstracto o técnico.','Explícame la entropía mediante una metáfora cotidiana para estudiantes de bachillerato.'],['Explicación didáctica','Docencia y formación.','Crea una metáfora para explicar liderazgo colaborativo a un grupo docente.'],['Comprensión intuitiva','Aprendizaje profundo.','Explica blockchain para personas no técnicas usando analogías simples y visuales.']],pros:['Facilita comprensión intuitiva.','Genera conexiones memorables.','Adapta metáforas según audiencia.'],cons:['Las metáforas simplifican detalles.','Puede generar interpretaciones subjetivas.','No sustituye rigor técnico formal.']},
+      {emoji:'📄',name:'ChatPDF',category:'Construcción de conocimiento',level:'Básico',url:'https://www.chatpdf.com/',short:'Permite conversar con documentos académicos para localizar ideas y comprender lecturas extensas.',extended:'Herramienta conversacional para analizar PDFs, responder preguntas y resumir documentos educativos o científicos.',cases:[['Lectura guiada','Artículo académico largo.','Resume este PDF identificando objetivos, metodología y hallazgos principales.'],['Búsqueda puntual','Localizar información específica.','¿En qué sección el documento explica aprendizaje autorregulado?'],['Preparación de clase','Extracción de ideas clave.','Genera cinco preguntas de discusión basadas en este artículo.']],pros:['Acelera revisión documental.','Facilita exploración de PDFs.','Útil para síntesis rápida.'],cons:['Depende de calidad del PDF.','Puede omitir matices importantes.','No reemplaza lectura completa.']},
+      {emoji:'➗',name:'Wolfram Alpha',category:'STEM y low-code',level:'Intermedio – Avanzado',url:'https://www.wolframalpha.com/',short:'Resuelve problemas matemáticos y científicos mostrando procesos y representaciones paso a paso.',extended:'Motor computacional orientado a matemáticas, física y análisis científico con visualizaciones y resolución estructurada.',cases:[['Resolución matemática','Ejercicio algebraico.','Resuelve esta ecuación cuadrática mostrando cada paso y representación gráfica.'],['Visualización científica','Comprensión de funciones.','Grafica esta función trigonométrica y explica el comportamiento de amplitud y periodo.'],['Análisis STEM','Datos científicos.','Calcula la velocidad promedio y representa los resultados en una tabla simple.']],pros:['Explica procesos paso a paso.','Muy útil para STEM.','Genera visualizaciones matemáticas.'],cons:['Curva de uso moderada.','Menos útil fuera de STEM.','Requiere preguntas precisas.']},
+      {emoji:'📘',name:'ExplainPaper',category:'Investigación',level:'Intermedio',url:'https://www.explainpaper.com/',short:'Aclara fragmentos complejos de artículos científicos mediante explicaciones contextualizadas.',extended:'Herramienta orientada a lectura académica que simplifica párrafos técnicos y conceptos especializados dentro de papers científicos.',cases:[['Lectura científica','Paper complejo.','Explica este párrafo sobre redes neuronales en lenguaje accesible para posgrado inicial.'],['Comprensión metodológica','Sección técnica.','Resume esta metodología experimental destacando variables y objetivos principales.'],['Apoyo a investigación','Primer acercamiento disciplinar.','Aclara conceptos estadísticos mencionados en este artículo de educación.']],pros:['Reduce barreras de lectura científica.','Explica términos técnicos contextualizados.','Útil para estudiantes investigadores.'],cons:['Puede simplificar en exceso.','Mayor utilidad en inglés.','No sustituye lectura disciplinar.']},
+      {emoji:'🎨',name:'Firefly',category:'Producción audiovisual',level:'Básico – Intermedio',url:'https://firefly.adobe.com/',short:'Genera imágenes y composiciones visuales para materiales didácticos y comunicación educativa.',extended:'Herramienta generativa de Adobe orientada a creación visual integrada con flujos de diseño educativo.',cases:[['Ilustración didáctica','Apoyo visual de contenido.','Genera una ilustración sobre ecosistemas marinos con estilo claro y educativo.'],['Diseño institucional','Comunicación escolar.','Crea un banner visual para una campaña de lectura escolar.'],['Recurso visual','Presentación educativa.','Diseña una escena visual sobre energías renovables para diapositivas académicas.']],pros:['Integración con Adobe.','Resultados visuales consistentes.','Útil para recursos educativos rápidos.'],cons:['Funciones avanzadas requieren suscripción.','Depende de prompts claros.','Control técnico limitado frente a diseño manual.']},
+      {emoji:'🖌️',name:'DALL·E',category:'Producción audiovisual',level:'Básico – Intermedio',url:'https://openai.com/dall-e-3',short:'Produce imágenes conceptuales para apoyo visual didáctico y explicación de contenidos.',extended:'Generador de imágenes mediante lenguaje natural útil para representar conceptos abstractos y construir materiales visuales personalizados.',cases:[['Concepto abstracto','Tema difícil de visualizar.','Genera una representación visual del sistema solar con estilo educativo e infografía simple.'],['Narrativa visual','Apoyo a storytelling.','Crea una escena futurista para explicar ciudades sostenibles en clase.'],['Material didáctico','Apoyo visual de contenido.','Diseña una ilustración educativa sobre cadena alimenticia para primaria.']],pros:['Convierte ideas en imágenes rápidamente.','Favorece aprendizaje visual.','Permite recursos personalizados.'],cons:['Puede generar errores conceptuales.','Resultados variables según prompt.','Requiere revisión visual docente.']},
+      {emoji:'🧷',name:'Canva',category:'Producción audiovisual',level:'Básico',url:'https://www.canva.com/',short:'Diseña presentaciones, infografías y materiales visuales para comunicación educativa accesible.',extended:'Plataforma visual ampliamente utilizada para crear recursos educativos rápidos mediante plantillas y herramientas de diseño simplificadas.',cases:[['Presentación visual','Clase expositiva.','Diseña una presentación sobre biodiversidad con iconografía clara y estructura visual simple.'],['Infografía educativa','Resumen conceptual.','Crea una infografía sobre hábitos de estudio efectivos para bachillerato.'],['Comunicación escolar','Difusión institucional.','Genera un cartel visual para una feria científica escolar.']],pros:['Muy accesible para docentes.','Reduce tiempo de diseño.','Amplia biblioteca visual.'],cons:['Plantillas pueden repetirse.','Funciones premium limitadas.','Puede priorizar estética sobre contenido.']},
+      {emoji:'🎼',name:'Soundraw',category:'Recursos sonoros',level:'Básico – Intermedio',url:'https://soundraw.io/',short:'Compone música ambiental adaptable para videos, cápsulas y recursos educativos multimedia.',extended:'Generador musical orientado a creación de pistas instrumentales ajustables para acompañar contenidos audiovisuales.',cases:[['Música de fondo','Video educativo.','Genera música instrumental suave para una cápsula educativa sobre astronomía.'],['Narrativa sonora','Recurso audiovisual.','Crea una pista energética para introducir un módulo de innovación educativa.'],['Podcast educativo','Producción auditiva.','Compón una base musical discreta para un podcast sobre historia contemporánea.']],pros:['Genera música rápidamente.','Permite ajustar duración y estilo.','Útil para producción multimedia.'],cons:['Menor control compositivo avanzado.','Estilos pueden sentirse similares.','Funciones avanzadas requieren pago.']},
+      {emoji:'🪞',name:'Cogni',category:'Metacognición y autorregulación',level:'Intermedio',url:'https://www.cogni.com/',short:'Favorece reflexión del aprendizaje y seguimiento de hábitos de estudio mediante análisis guiado.',extended:'Herramienta orientada a metacognición y autorregulación para identificar patrones de aprendizaje, hábitos y estrategias de estudio.',cases:[['Reflexión académica','Seguimiento de proceso.','Genera preguntas de reflexión para que estudiantes evalúen cómo estudiaron esta semana.'],['Hábitos de estudio','Autorregulación.','Identifica patrones de distracción y propone ajustes simples de rutina académica.'],['Seguimiento cognitivo','Aprendizaje consciente.','Diseña una plantilla de autoevaluación para monitorear comprensión y concentración.']],pros:['Favorece conciencia del aprendizaje.','Apoya hábitos de estudio.','Complementa tutoría y seguimiento.'],cons:['Depende de reflexión honesta.','Resultados requieren acompañamiento.','No sustituye intervención pedagógica.']},
+      {emoji:'🧩',name:'Story Creator Visual',category:'Construcción de conocimiento',level:'Intermedio',url:'https://chatgpt.com/g/g-36dXd3vlW-story-creator-visual',short:'Transforma ideas en narrativas visuales breves para comunicación educativa y conexión emocional.',extended:'GPT orientado a storytelling visual que convierte conceptos, mensajes o temas en historias breves acompañadas de una dirección visual coherente. Ayuda a contextualizar contenidos educativos, presentaciones o mensajes institucionales mediante narrativas memorables y emocionalmente accesibles.',cases:[['Narrativa educativa','Contextualizar un concepto abstracto mediante historia breve.','Crea una historia sencilla sobre trabajo en equipo para estudiantes de secundaria.'],['Apertura de presentación','Introducir una conferencia o clase con impacto emocional.','Genera un storytelling breve sobre innovación educativa para abrir una conferencia.'],['Comunicación visual','Conectar ideas institucionales con una audiencia específica.','Crea una narrativa visual sobre resiliencia para una campaña universitaria.']],pros:['Convierte conceptos en experiencias narrativas memorables.','Integra narrativa y dirección visual en un mismo flujo.','Facilita conexión emocional con contenidos educativos.'],cons:['Algunas historias requieren personalización contextual.','La calidad depende de la claridad del objetivo inicial.','No sustituye estrategia narrativa o pedagógica completa.']},
+      {emoji:'🛣️',name:'Rutas de decisión de vida',category:'Metacognición y autorregulación',level:'Intermedio',url:'https://chatgpt.com/g/g-3K3zcfpdJ-rutas-de-decision-de-vida',short:'Simula decisiones personales y profesionales para explorar consecuencias y pensamiento estratégico.',extended:'GPT interactivo basado en escenarios narrativos donde el usuario toma decisiones relacionadas con carrera, finanzas, emprendimiento y estilo de vida. Cada elección genera consecuencias simuladas que favorecen reflexión, planeación y análisis prospectivo.',cases:[['Proyecto de vida','Explorar rutas personales y profesionales.','Quiero iniciar mi carrera después de la universidad.'],['Decisiones financieras','Evaluar riesgos y beneficios posibles.','Tengo $10,000 ahorrados, ¿qué hago?'],['Planeación personal','Analizar cambios importantes de contexto.','Quiero mudarme a otro país y trabajar remoto.']],pros:['Favorece aprendizaje mediante simulación.','Desarrolla pensamiento estratégico y prospectivo.','Genera experiencias narrativas personalizadas.'],cons:['No sustituye asesoría profesional real.','Las consecuencias son simuladas y aproximadas.','Requiere suficiente contexto para mayor coherencia.']},
+      {emoji:'➗',name:'Ejercicios Math IA',category:'STEM y low-code',level:'Básico – Intermedio',url:'https://chatgpt.com/g/g-6805a078e2788191b487105dc1f2ebac-ejercicios-math-ia',short:'Genera práctica matemática adaptada por nivel con explicaciones y reforzamiento didáctico.',extended:'GPT educativo orientado a creación de ejercicios, explicaciones y actividades matemáticas ajustadas según grado escolar y dificultad. Facilita reforzamiento, diferenciación y práctica guiada mediante contenido estructurado y comprensible.',cases:[['Práctica escolar','Crear ejercicios ajustados al nivel.','Genera 10 ejercicios de fracciones para 5° de primaria con respuestas.'],['Explicación sencilla','Simplificar conceptos matemáticos complejos.','Explícame ecuaciones lineales para secundaria de forma sencilla.'],['Reforzamiento académico','Apoyar estudiantes con dificultades específicas.','Crea ejercicios básicos de división para alumnos con dificultades de aprendizaje.']],pros:['Adapta ejercicios según nivel educativo.','Genera explicaciones claras y progresivas.','Reduce tiempo de preparación docente.'],cons:['Requiere instrucciones específicas.','Necesita validación pedagógica contextual.','No genera archivos finales automáticamente.']},
+      {emoji:'💬',name:'Feedback: I like, I wish, What if',category:'Evaluación y retroalimentación',level:'Intermedio',url:'https://chatgpt.com/g/g-681d40bc480c8191ad86c969d692a2ec-feedback-i-like-i-wish-what-if',short:'Estructura retroalimentación empática y constructiva para proyectos, clases y propuestas educativas.',extended:'GPT basado en el marco “I like, I wish, What if” para generar retroalimentación formativa sobre actividades, planeaciones y proyectos educativos. Facilita procesos de mejora mediante reconocimiento, sugerencias y exploración de nuevas posibilidades.',cases:[['Retroalimentación didáctica','Revisar planeaciones y actividades educativas.','Analiza esta planeación de ciencias usando I like, I wish, What if.'],['Innovación educativa','Mejorar propuestas pedagógicas iniciales.','Dame retroalimentación sobre esta actividad ABP para primaria.'],['Revisión colaborativa','Acompañar procesos entre colegas docentes.','Actúa como compañero docente y revisa esta secuencia didáctica.']],pros:['Favorece retroalimentación empática y formativa.','Estructura conversaciones de mejora continua.','Facilita revisión colaborativa de propuestas.'],cons:['Depende de información suficientemente clara.','No sustituye evaluación especializada.','Puede requerir contexto educativo adicional.']},
+      {emoji:'🎮',name:'Drive On Your Course',category:'Diseño instruccional y planeación',level:'Intermedio – Avanzado',url:'https://chatgpt.com/g/g-69160eec781c8191a53f233bb27e72d9-drive-on-your-course',short:'Diseña experiencias activas de aprendizaje mediante simulaciones, retos y dinámicas gamificadas.',extended:'GPT orientado a creación de experiencias formativas interactivas mediante gamificación, roleplay, simulaciones y metodologías activas. Facilita diseño de dinámicas educativas, orientación vocacional y práctica de habilidades profesionales con enfoques participativos y contextualizados.',cases:[['Orientación vocacional','Explorar intereses y trayectorias posibles.','Diseña una misión gamificada para descubrir qué carrera podría gustarme.'],['Roleplay profesional','Practicar habilidades laborales y comunicación.','Haz un roleplay de entrevista para prácticas profesionales en marketing.'],['Boss Fight académico','Repasar contenidos mediante retos progresivos.','Crea un Boss Fight de álgebra con preguntas progresivas para secundaria.']],pros:['Incrementa participación mediante aprendizaje activo.','Integra simulación, narrativa y práctica contextual.','Adapta dinámicas según objetivos y nivel educativo.'],cons:['No sustituye orientación profesional especializada.','Requiere implementación y mediación humana.','La calidad depende de objetivos claramente definidos.']}
+    ];
+
+    const grid = document.getElementById('grid');
+    const search = document.getElementById('search');
+    const categoryMenu = document.getElementById('categoryMenu');
+    const resultCount = document.getElementById('resultCount');
+
+    function card(t){
+      return `<article class="card" data-name="${t.name.toLowerCase()}" data-category="${t.category.toLowerCase()}" data-text="${[t.name,t.category,t.short,t.extended,t.cases.flat().join(' ')].join(' ').toLowerCase()}">
+        <div class="top"><div class="name"><div class="emoji">${t.emoji}</div><div><h2>${t.name}</h2></div></div><span class="tag">${t.category}</span></div>
+        <p class="short">${t.short}</p>
+        <div class="actions"><a class="btn primary" href="${t.url}" target="_blank" rel="noopener noreferrer">Ir a la herramienta ↗</a></div>
+        <details><summary>▶ Ficha pedagógica</summary><div class="details-content"><p class="extended">${t.extended}</p><div class="mini-title">Casos de uso</div>${t.cases.map(c=>`<div class="case"><b>${c[0]}</b><span>${c[1]}</span><div class="prompt">${c[2]}</div></div>`).join('')}<div class="cols"><div class="box"><h4>✔ Ventajas</h4><ul>${t.pros.map(p=>`<li>${p}</li>`).join('')}</ul></div><div class="box limit"><h4>✘ Limitaciones</h4><ul>${t.cons.map(c=>`<li>${c}</li>`).join('')}</ul></div></div></div></details>
+      </article>`;
+    }
+
+    function buildCategoryMenu(){
+      const categories = [...new Set(tools.map(t=>t.category))].sort();
+      categoryMenu.innerHTML = categories.map(category => {
+        const items = tools.filter(t => t.category === category);
+        return `<details><summary>${category} <small>${items.length}</small></summary><div class="tool-chips">${items.map(t=>`<button class="chip" type="button" data-tool="${t.name}">${t.name}</button>`).join('')}</div></details>`;
+      }).join('');
+
+      categoryMenu.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          search.value = chip.dataset.tool;
+          filterCards();
+          document.getElementById('grid').scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+    }
+
+    function filterCards(){
+      const q = search.value.trim().toLowerCase();
+      let visible = 0;
+      document.querySelectorAll('.card').forEach(card => {
+        const show = !q || card.dataset.text.includes(q);
+        card.classList.toggle('hidden', !show);
+        if(show) visible++;
+      });
+      resultCount.textContent = q ? `${visible} resultado(s) para “${search.value}”` : `${tools.length} herramientas visibles`;
+    }
+
+    function render(){
+      grid.innerHTML = tools.map(card).join('');
+      buildCategoryMenu();
+      document.getElementById('toolsCount').textContent = tools.length;
+      document.getElementById('categoriesCount').textContent = new Set(tools.map(t=>t.category)).size;
+      document.getElementById('casesCount').textContent = tools.reduce((sum,t)=>sum + t.cases.length,0);
+      filterCards();
+    }
+
+    search.addEventListener('input', filterCards);
+    render();
+  </script>
 </body>
 </html>
