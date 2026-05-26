@@ -1,0 +1,33 @@
+name: Fix Instagram link
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  replace-link:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Replace Instagram URL
+        run: |
+          perl -0pi -e 's|https://www\.instagram\.com/olafroman/|https://www.instagram.com/olafrrom/|g' index.html
+
+      - name: Commit changes if needed
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Corregir enlace de Instagram"
+            git push
+          fi
