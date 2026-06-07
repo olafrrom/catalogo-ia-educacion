@@ -1,0 +1,50 @@
+name: Add Napkin AI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/add-napkin-ai.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  add-napkin-ai:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Add Napkin AI to catalog
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          if "name:'Napkin AI'" in text:
+              print('Napkin AI already exists')
+          else:
+              old = """      {emoji:'🎮',name:'Drive On Your Course',category:'Diseño instruccional y planeación',level:'Intermedio – Avanzado',url:'https://chatgpt.com/g/g-69160eec781c8191a53f233bb27e72d9-drive-on-your-course',short:'Diseña experiencias activas de aprendizaje mediante simulaciones, retos y dinámicas gamificadas.',extended:'GPT orientado a creación de experiencias formativas interactivas mediante gamificación, roleplay, simulaciones y metodologías activas. Facilita diseño de dinámicas educativas, orientación vocacional y práctica de habilidades profesionales con enfoques participativos y contextualizados.',cases:[['Orientación vocacional','Explorar intereses y trayectorias posibles.','Diseña una misión gamificada para descubrir qué carrera podría gustarme.'],['Roleplay profesional','Practicar habilidades laborales y comunicación.','Haz un roleplay de entrevista para prácticas profesionales en marketing.'],['Boss Fight académico','Repasar contenidos mediante retos progresivos.','Crea un Boss Fight de álgebra con preguntas progresivas para secundaria.']],pros:['Incrementa participación mediante aprendizaje activo.','Integra simulación, narrativa y práctica contextual.','Adapta dinámicas según objetivos y nivel educativo.'],cons:['No sustituye orientación profesional especializada.','Requiere implementación y mediación humana.','La calidad depende de objetivos claramente definidos.']}
+    ];"""
+              new = """      {emoji:'🎮',name:'Drive On Your Course',category:'Diseño instruccional y planeación',level:'Intermedio – Avanzado',url:'https://chatgpt.com/g/g-69160eec781c8191a53f233bb27e72d9-drive-on-your-course',short:'Diseña experiencias activas de aprendizaje mediante simulaciones, retos y dinámicas gamificadas.',extended:'GPT orientado a creación de experiencias formativas interactivas mediante gamificación, roleplay, simulaciones y metodologías activas. Facilita diseño de dinámicas educativas, orientación vocacional y práctica de habilidades profesionales con enfoques participativos y contextualizados.',cases:[['Orientación vocacional','Explorar intereses y trayectorias posibles.','Diseña una misión gamificada para descubrir qué carrera podría gustarme.'],['Roleplay profesional','Practicar habilidades laborales y comunicación.','Haz un roleplay de entrevista para prácticas profesionales en marketing.'],['Boss Fight académico','Repasar contenidos mediante retos progresivos.','Crea un Boss Fight de álgebra con preguntas progresivas para secundaria.']],pros:['Incrementa participación mediante aprendizaje activo.','Integra simulación, narrativa y práctica contextual.','Adapta dinámicas según objetivos y nivel educativo.'],cons:['No sustituye orientación profesional especializada.','Requiere implementación y mediación humana.','La calidad depende de objetivos claramente definidos.']},
+      {emoji:'🧭',name:'Napkin AI',category:'Construcción de conocimiento',level:'Básico – Intermedio',url:'https://www.napkin.ai/',short:'Transforma texto en diagramas, mapas mentales, infografías y visuales claros para comunicar ideas complejas.',extended:'Herramienta de IA que convierte texto copiado o redactado en visuales profesionales como diagramas, mapas mentales, flujos, esquemas e infografías. Es útil para estructurar conceptos, explicar procesos, preparar presentaciones y crear organizadores gráficos para materiales educativos sin requerir conocimientos de diseño.',cases:[['Organizador gráfico','Convertir contenido teórico en apoyo visual.','Transforma este texto sobre aprendizaje activo en un mapa mental claro para docentes universitarios.'],['Diagrama de proceso','Explicar una secuencia didáctica o metodología.','Convierte esta descripción de una estrategia didáctica en un diagrama de flujo con pasos claros y breves.'],['Infografía para clase','Comunicar ideas complejas en formato visual.','Genera una infografía educativa a partir de este texto sobre inteligencia artificial generativa y uso responsable.']],pros:['Convierte texto en visuales rápidamente.','Facilita explicar ideas complejas.','No requiere habilidades avanzadas de diseño.'],cons:['Puede simplificar relaciones conceptuales complejas.','Requiere revisar precisión visual y jerarquía de ideas.','Las funciones disponibles pueden variar según plan.']}
+    ];"""
+              if old not in text:
+                  raise SystemExit('Target block not found; no changes made')
+              path.write_text(text.replace(old, new), encoding='utf-8')
+          PY
+
+      - name: Commit changes if needed
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Agregar Napkin AI al catálogo"
+            git push
+          fi
