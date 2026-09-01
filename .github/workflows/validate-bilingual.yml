@@ -1,0 +1,26 @@
+name: Validate bilingual catalog
+
+on:
+  push:
+    branches:
+      - bilingual-alpha-sort
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: |
+          node --check catalog-i18n.js
+          node --check analytics-events.js
+      - name: Validate integration markers
+        run: |
+          grep -q "Español Latinoamericano" catalog-i18n.js
+          grep -q "English (US)" catalog-i18n.js
+          grep -q "sortAlphabetically" catalog-i18n.js
+          grep -q "catalog-i18n.js" analytics-events.js
