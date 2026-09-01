@@ -106,9 +106,22 @@
     track('external_tool_click', { tool, category, destination: link.href });
   });
 
+  const loadCatalogEnhancements = () => {
+    if (document.querySelector('script[data-catalog-i18n]')) return;
+    const script = document.createElement('script');
+    script.src = './catalog-i18n.js?v=1';
+    script.defer = true;
+    script.dataset.catalogI18n = 'true';
+    document.body.appendChild(script);
+  };
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', addPromptCopyButtons);
+    document.addEventListener('DOMContentLoaded', () => {
+      addPromptCopyButtons();
+      loadCatalogEnhancements();
+    });
   } else {
     addPromptCopyButtons();
+    loadCatalogEnhancements();
   }
 })();
