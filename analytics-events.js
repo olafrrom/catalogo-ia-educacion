@@ -46,6 +46,7 @@
       .copy-prompt-btn:hover{transform:translateY(-1px);border-color:#2563eb;background:#f8fbff}
       .copy-prompt-btn.copied{background:#ecfdf5;color:#0f766e;border-color:#99f6e4}
       .copy-prompt-btn:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+      .stats{position:relative;z-index:6}
     `;
     document.head.appendChild(style);
   };
