@@ -5,6 +5,36 @@
     }
   };
 
+  const CATEGORY_CANONICAL = {
+    'accesibilidad':'Accesibilidad',
+    'construcción de conocimiento':'Construcción de conocimiento',
+    'diseño instruccional y planeación':'Diseño instruccional y planeación',
+    'evaluación y retroalimentación':'Evaluación y retroalimentación',
+    'investigación':'Investigación',
+    'metacognición y autorregulación':'Metacognición y autorregulación',
+    'producción audiovisual':'Producción audiovisual',
+    'productividad y gestión':'Productividad y gestión',
+    'recursos sonoros':'Recursos sonoros',
+    'stem y low-code':'STEM y low-code',
+    'accessibility':'Accesibilidad',
+    'knowledge building':'Construcción de conocimiento',
+    'instructional design and planning':'Diseño instruccional y planeación',
+    'assessment and feedback':'Evaluación y retroalimentación',
+    'research':'Investigación',
+    'metacognition and self-regulation':'Metacognición y autorregulación',
+    'audiovisual production':'Producción audiovisual',
+    'productivity and management':'Productividad y gestión',
+    'audio resources':'Recursos sonoros'
+  };
+
+  const canonicalTool = (card) => card?.dataset?.originalName || card?.querySelector('h2')?.textContent?.trim() || 'Unknown';
+  const canonicalCategory = (cardOrText) => {
+    const raw = typeof cardOrText === 'string'
+      ? cardOrText
+      : (cardOrText?.dataset?.category || cardOrText?.querySelector('.tag')?.textContent || 'Unknown');
+    return CATEGORY_CANONICAL[String(raw).trim().toLowerCase()] || String(raw).trim();
+  };
+
   const injectCopyStyles = () => {
     if (document.getElementById('prompt-copy-styles')) return;
     const style = document.createElement('style');
@@ -55,8 +85,8 @@
       button.addEventListener('click', async () => {
         const prompt = promptEl.textContent.trim();
         const card = caseEl.closest('.card');
-        const tool = card?.querySelector('h2')?.textContent?.trim() || 'Unknown';
-        const category = card?.querySelector('.tag')?.textContent?.trim() || 'Unknown';
+        const tool = canonicalTool(card);
+        const category = canonicalCategory(card);
         const useCase = caseEl.querySelector('b')?.textContent?.trim() || 'Unknown';
         try {
           await copyText(prompt);
@@ -81,9 +111,7 @@
     if (!(details instanceof HTMLDetailsElement) || !details.open) return;
     const card = details.closest('.card');
     if (!card) return;
-    const tool = card.querySelector('h2')?.textContent?.trim() || 'Unknown';
-    const category = card.querySelector('.tag')?.textContent?.trim() || 'Unknown';
-    track('tool_open', { tool, category });
+    track('tool_open', { tool: canonicalTool(card), category: canonicalCategory(card) });
   }, true);
 
   document.addEventListener('click', (event) => {
@@ -91,8 +119,8 @@
     if (categorySummary) {
       const details = categorySummary.parentElement;
       if (details && !details.open) {
-        const category = categorySummary.childNodes[0]?.textContent?.trim() || categorySummary.textContent?.trim() || 'Unknown';
-        track('category_open', { category });
+        const displayed = categorySummary.childNodes[0]?.textContent?.trim() || categorySummary.textContent?.trim() || 'Unknown';
+        track('category_open', { category: canonicalCategory(displayed) });
       }
       return;
     }
@@ -101,9 +129,7 @@
     if (!link) return;
     const card = link.closest('.card');
     if (!card) return;
-    const tool = card.querySelector('h2')?.textContent?.trim() || 'Unknown';
-    const category = card.querySelector('.tag')?.textContent?.trim() || 'Unknown';
-    track('external_tool_click', { tool, category, destination: link.href });
+    track('external_tool_click', { tool: canonicalTool(card), category: canonicalCategory(card), destination: link.href });
   });
 
   const loadCatalogEnhancements = () => {
