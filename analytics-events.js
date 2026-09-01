@@ -1,154 +1,36 @@
 (() => {
   const track = (eventName, data = {}) => {
-    if (window.umami && typeof window.umami.track === 'function') {
-      window.umami.track(eventName, data);
-    }
+    if (window.umami && typeof window.umami.track === 'function') window.umami.track(eventName, data);
   };
 
   const CATEGORY_CANONICAL = {
-    'accesibilidad':'Accesibilidad',
-    'construcción de conocimiento':'Construcción de conocimiento',
-    'diseño instruccional y planeación':'Diseño instruccional y planeación',
-    'evaluación y retroalimentación':'Evaluación y retroalimentación',
-    'investigación':'Investigación',
-    'metacognición y autorregulación':'Metacognición y autorregulación',
-    'producción audiovisual':'Producción audiovisual',
-    'productividad y gestión':'Productividad y gestión',
-    'recursos sonoros':'Recursos sonoros',
-    'stem y low-code':'STEM y low-code',
-    'accessibility':'Accesibilidad',
-    'knowledge building':'Construcción de conocimiento',
-    'instructional design and planning':'Diseño instruccional y planeación',
-    'assessment and feedback':'Evaluación y retroalimentación',
-    'research':'Investigación',
-    'metacognition and self-regulation':'Metacognición y autorregulación',
-    'audiovisual production':'Producción audiovisual',
-    'productivity and management':'Productividad y gestión',
-    'audio resources':'Recursos sonoros'
+    'accesibilidad':'Accesibilidad','construcción de conocimiento':'Construcción de conocimiento','diseño instruccional y planeación':'Diseño instruccional y planeación','evaluación y retroalimentación':'Evaluación y retroalimentación','investigación':'Investigación','metacognición y autorregulación':'Metacognición y autorregulación','producción audiovisual':'Producción audiovisual','productividad y gestión':'Productividad y gestión','recursos sonoros':'Recursos sonoros','stem y low-code':'STEM y low-code','accessibility':'Accesibilidad','knowledge building':'Construcción de conocimiento','instructional design and planning':'Diseño instruccional y planeación','assessment and feedback':'Evaluación y retroalimentación','research':'Investigación','metacognition and self-regulation':'Metacognición y autorregulación','audiovisual production':'Producción audiovisual','productivity and management':'Productividad y gestión','audio resources':'Recursos sonoros'
   };
-
-  const canonicalTool = (card) => card?.dataset?.originalName || card?.querySelector('h2')?.textContent?.trim() || 'Unknown';
-  const canonicalCategory = (cardOrText) => {
-    const raw = typeof cardOrText === 'string'
-      ? cardOrText
-      : (cardOrText?.dataset?.category || cardOrText?.querySelector('.tag')?.textContent || 'Unknown');
-    return CATEGORY_CANONICAL[String(raw).trim().toLowerCase()] || String(raw).trim();
-  };
+  const canonicalTool = card => card?.dataset?.originalName || card?.querySelector('h2')?.textContent?.trim() || 'Unknown';
+  const canonicalCategory = cardOrText => { const raw=typeof cardOrText==='string'?cardOrText:(cardOrText?.dataset?.category||cardOrText?.querySelector('.tag')?.textContent||'Unknown'); return CATEGORY_CANONICAL[String(raw).trim().toLowerCase()]||String(raw).trim(); };
 
   const injectCopyStyles = () => {
-    if (document.getElementById('prompt-copy-styles')) return;
-    const style = document.createElement('style');
-    style.id = 'prompt-copy-styles';
-    style.textContent = `
-      .prompt-wrap{position:relative;margin-top:7px}
-      .prompt-wrap .prompt{padding-right:46px}
-      .copy-prompt-btn{position:absolute;top:8px;right:8px;width:32px;height:32px;border:1px solid var(--line,#d7e7f2);border-radius:10px;background:rgba(255,255,255,.94);color:#2563eb;display:grid;place-items:center;cursor:pointer;font-size:15px;line-height:1;transition:transform .15s ease,background .15s ease,border-color .15s ease;box-shadow:0 4px 12px rgba(37,99,235,.08)}
-      .copy-prompt-btn:hover{transform:translateY(-1px);border-color:#2563eb;background:#f8fbff}
-      .copy-prompt-btn.copied{background:#ecfdf5;color:#0f766e;border-color:#99f6e4}
-      .copy-prompt-btn:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
-      .stats{position:relative;z-index:6}
-    `;
+    if(document.getElementById('prompt-copy-styles')) return;
+    const style=document.createElement('style'); style.id='prompt-copy-styles';
+    style.textContent=`.prompt-wrap{position:relative;margin-top:7px}.prompt-wrap .prompt{padding-right:46px}.copy-prompt-btn{position:absolute;top:8px;right:8px;width:32px;height:32px;border:1px solid var(--line,#d7e7f2);border-radius:10px;background:rgba(255,255,255,.94);color:#2563eb;display:grid;place-items:center;cursor:pointer;font-size:15px;line-height:1;transition:transform .15s ease,background .15s ease,border-color .15s ease;box-shadow:0 4px 12px rgba(37,99,235,.08)}.copy-prompt-btn:hover{transform:translateY(-1px);border-color:#2563eb;background:#f8fbff}.copy-prompt-btn.copied{background:#ecfdf5;color:#0f766e;border-color:#99f6e4}.copy-prompt-btn:focus-visible{outline:2px solid #2563eb;outline-offset:2px}.stats{position:relative;z-index:6}.curator-socials{display:inline-flex;align-items:center;gap:7px;margin-left:8px;vertical-align:middle}.curator-social{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);transition:background .15s ease,transform .15s ease}.curator-social:hover{background:rgba(255,255,255,.24);transform:translateY(-1px)}.curator-social svg{width:17px;height:17px;fill:currentColor}@media(max-width:760px){.curator-socials{margin-left:6px}.curator-social{width:34px;height:34px}}`;
     document.head.appendChild(style);
   };
 
-  const copyText = async (text) => {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
-    }
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    textarea.remove();
+  const addSocialLinks = () => {
+    if(document.querySelector('.curator-socials')) return;
+    const credit=document.querySelector('header .credit'); if(!credit) return;
+    const socials=document.createElement('span'); socials.className='curator-socials';
+    socials.innerHTML=`<a class="curator-social" href="https://www.instagram.com/olafrrom/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Olaf Román" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm10.5 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a><a class="curator-social" href="https://www.linkedin.com/in/olaf-rom%C3%A1n/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Olaf Román" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.5H3V21h3.5V8.5ZM4.75 3A2.05 2.05 0 1 0 4.75 7.1 2.05 2.05 0 0 0 4.75 3ZM21 14.1c0-3.77-2.01-5.52-4.69-5.52-2.16 0-3.13 1.19-3.67 2.02V8.5H9.15V21h3.49v-6.19c0-1.63.31-3.21 2.33-3.21 1.99 0 2.01 1.86 2.01 3.32V21H21v-6.9Z"/></svg></a>`;
+    credit.insertAdjacentElement('afterend',socials);
   };
 
-  const addPromptCopyButtons = () => {
-    injectCopyStyles();
-    document.querySelectorAll('.case').forEach((caseEl) => {
-      if (caseEl.querySelector('.copy-prompt-btn')) return;
-      const promptEl = caseEl.querySelector('.prompt');
-      if (!promptEl) return;
-      const wrapper = document.createElement('div');
-      wrapper.className = 'prompt-wrap';
-      promptEl.parentNode.insertBefore(wrapper, promptEl);
-      wrapper.appendChild(promptEl);
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'copy-prompt-btn';
-      button.setAttribute('aria-label', 'Copiar prompt');
-      button.setAttribute('title', 'Copiar prompt');
-      button.textContent = '⧉';
-      wrapper.appendChild(button);
-      button.addEventListener('click', async () => {
-        const prompt = promptEl.textContent.trim();
-        const card = caseEl.closest('.card');
-        const tool = canonicalTool(card);
-        const category = canonicalCategory(card);
-        const useCase = caseEl.querySelector('b')?.textContent?.trim() || 'Unknown';
-        try {
-          await copyText(prompt);
-          button.textContent = '✓';
-          button.classList.add('copied');
-          button.setAttribute('aria-label', 'Prompt copiado');
-          track('prompt_copy', { tool, category, use_case: useCase });
-          setTimeout(() => {
-            button.textContent = '⧉';
-            button.classList.remove('copied');
-            button.setAttribute('aria-label', 'Copiar prompt');
-          }, 1200);
-        } catch (error) {
-          console.error('No se pudo copiar el prompt', error);
-        }
-      });
-    });
-  };
+  const copyText=async text=>{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return;}const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();};
+  const addPromptCopyButtons=()=>{injectCopyStyles();document.querySelectorAll('.case').forEach(caseEl=>{if(caseEl.querySelector('.copy-prompt-btn'))return;const promptEl=caseEl.querySelector('.prompt');if(!promptEl)return;const wrapper=document.createElement('div');wrapper.className='prompt-wrap';promptEl.parentNode.insertBefore(wrapper,promptEl);wrapper.appendChild(promptEl);const button=document.createElement('button');button.type='button';button.className='copy-prompt-btn';button.setAttribute('aria-label','Copiar prompt');button.setAttribute('title','Copiar prompt');button.textContent='⧉';wrapper.appendChild(button);button.addEventListener('click',async()=>{const prompt=promptEl.textContent.trim(),card=caseEl.closest('.card'),tool=canonicalTool(card),category=canonicalCategory(card),useCase=caseEl.querySelector('b')?.textContent?.trim()||'Unknown';try{await copyText(prompt);button.textContent='✓';button.classList.add('copied');button.setAttribute('aria-label','Prompt copiado');track('prompt_copy',{tool,category,use_case:useCase});setTimeout(()=>{button.textContent='⧉';button.classList.remove('copied');button.setAttribute('aria-label','Copiar prompt');},1200);}catch(error){console.error('No se pudo copiar el prompt',error);}});});};
 
-  document.addEventListener('toggle', (event) => {
-    const details = event.target;
-    if (!(details instanceof HTMLDetailsElement) || !details.open) return;
-    const card = details.closest('.card');
-    if (!card) return;
-    track('tool_open', { tool: canonicalTool(card), category: canonicalCategory(card) });
-  }, true);
+  document.addEventListener('toggle',event=>{const details=event.target;if(!(details instanceof HTMLDetailsElement)||!details.open)return;const card=details.closest('.card');if(!card)return;track('tool_open',{tool:canonicalTool(card),category:canonicalCategory(card)});},true);
+  document.addEventListener('click',event=>{const categorySummary=event.target.closest('#categoryMenu details > summary');if(categorySummary){const details=categorySummary.parentElement;if(details&&!details.open){const displayed=categorySummary.childNodes[0]?.textContent?.trim()||categorySummary.textContent?.trim()||'Unknown';track('category_open',{category:canonicalCategory(displayed)});}return;}const link=event.target.closest('a.primary');if(!link)return;const card=link.closest('.card');if(!card)return;track('external_tool_click',{tool:canonicalTool(card),category:canonicalCategory(card),destination:link.href});});
 
-  document.addEventListener('click', (event) => {
-    const categorySummary = event.target.closest('#categoryMenu details > summary');
-    if (categorySummary) {
-      const details = categorySummary.parentElement;
-      if (details && !details.open) {
-        const displayed = categorySummary.childNodes[0]?.textContent?.trim() || categorySummary.textContent?.trim() || 'Unknown';
-        track('category_open', { category: canonicalCategory(displayed) });
-      }
-      return;
-    }
-
-    const link = event.target.closest('a.primary');
-    if (!link) return;
-    const card = link.closest('.card');
-    if (!card) return;
-    track('external_tool_click', { tool: canonicalTool(card), category: canonicalCategory(card), destination: link.href });
-  });
-
-  const loadCatalogEnhancements = () => {
-    if (document.querySelector('script[data-catalog-i18n]')) return;
-    const script = document.createElement('script');
-    script.src = './catalog-i18n.js?v=1';
-    script.defer = true;
-    script.dataset.catalogI18n = 'true';
-    document.body.appendChild(script);
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      addPromptCopyButtons();
-      loadCatalogEnhancements();
-    });
-  } else {
-    addPromptCopyButtons();
-    loadCatalogEnhancements();
-  }
+  const loadCatalogEnhancements=()=>{if(document.querySelector('script[data-catalog-i18n]'))return;const script=document.createElement('script');script.src='./catalog-i18n.js?v=1';script.defer=true;script.dataset.catalogI18n='true';document.body.appendChild(script);};
+  const initEnhancements=()=>{addPromptCopyButtons();addSocialLinks();loadCatalogEnhancements();};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initEnhancements);else initEnhancements();
 })();
